@@ -5,13 +5,15 @@ import { ContainerApp } from "../../components/ContainerApp";
 import { Titulo } from "../../components/Titulo";
 import api from "../../utils/api";
 import { FormataValorMonetarioTexto } from "../../utils/utils";
+// import { ConverteStringParaArrayObjetos } from "../../utils/utils";
+// import { ConverteStringParaArrayObjetos2 } from "../../utils/utils";
 import { MdPlayArrow } from "react-icons/md";
 import styled from "styled-components";
 
 interface DataTypes {
   nome: string;
   preco: number;
-  ingredientes: string[];
+  ingredientes: { nome: string }[];
 }
 
 const valoresIniciais: DataTypes = {
@@ -31,9 +33,11 @@ export function RefeicaoPage() {
 
     api.get(`/refeicao/${id}`)
       .then((item) => {
-        let nome = item.data.nome;
+        let nome = String(item.data.nome);
         let preco = parseFloat(item.data.preco);
-        let ingredientes = String(item.data.ingredientes).split(";");
+        // let ingredientes = String(item.data.ingredientes).split(";");
+        // let ingredientes = ConverteStringParaArrayObjetos(String(item.data.ingredientes));
+        let ingredientes = JSON.parse(String(item.data.ingredientes));
 
         setData({ nome, preco, ingredientes })
       })
@@ -63,7 +67,7 @@ export function RefeicaoPage() {
                   className="d-flex flex-row align-items-center"
                 >
                   <MdPlayArrow size={25} className="me-1" />
-                  <Titulo tag="h2" className="p-0 m-0">{item}</Titulo>
+                  <Titulo tag="h2" className="p-0 m-0">{item.nome}</Titulo>
                 </div>
               );
             })}
