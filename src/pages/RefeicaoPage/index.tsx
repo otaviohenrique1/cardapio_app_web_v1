@@ -5,25 +5,12 @@ import { ContainerApp } from "../../components/ContainerApp";
 import { Titulo } from "../../components/Titulo";
 import api from "../../utils/api";
 import { FormataValorMonetarioTexto } from "../../utils/utils";
-// import { ConverteStringParaArrayObjetos } from "../../utils/utils";
-// import { ConverteStringParaArrayObjetos2 } from "../../utils/utils";
 import { MdPlayArrow } from "react-icons/md";
 import styled from "styled-components";
-
-interface DataTypes {
-  nome: string;
-  preco: number;
-  ingredientes: { nome: string }[];
-}
-
-const valoresIniciais: DataTypes = {
-  nome: "",
-  preco: 0,
-  ingredientes: []
-};
+import { valoresIniciaisRefeicao } from "../../utils/constantes";
 
 export function RefeicaoPage() {
-  const [data, setData] = useState<DataTypes>(valoresIniciais);
+  const [data, setData] = useState<RefeicaoTypes>(valoresIniciaisRefeicao);
   const { id } = useParams();
 
   useEffect(() => {
@@ -35,8 +22,6 @@ export function RefeicaoPage() {
       .then((item) => {
         let nome = String(item.data.nome);
         let preco = parseFloat(item.data.preco);
-        // let ingredientes = String(item.data.ingredientes).split(";");
-        // let ingredientes = ConverteStringParaArrayObjetos(String(item.data.ingredientes));
         let ingredientes = JSON.parse(String(item.data.ingredientes));
 
         setData({ nome, preco, ingredientes })
@@ -62,13 +47,7 @@ export function RefeicaoPage() {
             <Titulo tag="h2" className="mb-3">Ingredientes</Titulo>
             {data.ingredientes.map((item, index) => {
               return (
-                <div
-                  key={index}
-                  className="d-flex flex-row align-items-center"
-                >
-                  <MdPlayArrow size={25} className="me-1" />
-                  <Titulo tag="h2" className="p-0 m-0">{item.nome}</Titulo>
-                </div>
+                <IngredienteItem key={index} nome={item.nome} />
               );
             })}
           </Col>
@@ -76,6 +55,19 @@ export function RefeicaoPage() {
       </ContainerApp>
       <BotaoVoltar to="/" className="btn btn-lg btn-primary position-absolute bottom-0 w-100 rounded-0">Voltar</BotaoVoltar>
     </>
+  );
+}
+
+interface IngredienteItemProps {
+  nome: string;
+}
+
+function IngredienteItem(props: IngredienteItemProps) {
+  return (
+    <div className="d-flex flex-row align-items-center">
+      <MdPlayArrow size={25} className="me-1" />
+      <Titulo tag="h2" className="p-0 m-0">{props.nome}</Titulo>
+    </div>
   );
 }
 
