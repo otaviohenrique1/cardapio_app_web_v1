@@ -11,8 +11,3 @@ html, body, #root {
   background-color: #c4c3c395;
   height: 100%;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
