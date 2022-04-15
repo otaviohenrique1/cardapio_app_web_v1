@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Col, Row } from "reactstrap";
-import { Titulo } from "../../../components/Titulo";
+import { Row } from "reactstrap";
 import { ContainerApp } from "../../../components/ContainerApp";
 import { FormularioUsuario } from "../../../components/Formularios/FormularioUsuario";
 import { ModalErroCadastro, ModalSucessoCadastro } from "../../../components/Modals";
 import api from "../../../utils/api";
-import { valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
+import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { FormatadorCrypto } from "../../../utils/FormatadorCrypto";
 import { validacaoSchemaFormularioUsuario } from "../../../utils/ValidacaoSchemas";
@@ -18,10 +17,14 @@ export function ClienteEdicao() {
   let { id } = useParams();
 
   useEffect(() => {
-    api.get(`usuario/${id}`)
+    if (!id) { return; }
+
+    api.get(`cliente/${id}`)
       .then((item) => {
-        let { nome, email, senha } = item.data;
-        let data = { nome, email, senha };
+        let { nome, email, senha, rua, numero, bairro,
+          cidade, estado, cep, telefone } = item.data;
+        let data = { nome, email, senha, rua, numero, bairro,
+          cidade, estado, cep, telefone };
 
         setData(data);
       })
@@ -35,26 +38,44 @@ export function ClienteEdicao() {
     nome: data.nome || "",
     email: data.email || "",
     senha: data.senha || "",
+    rua: data.rua || "",
+    numero: data.numero || "",
+    bairro: data.bairro || "",
+    cidade: data.cidade || "",
+    estado: data.estado || "",
+    cep: data.cep || "",
+    telefone: data.telefone || ""
   };
 
   async function handleSubmit(values: UsuarioTypes) {
-    const { nome, email, senha } = values;
+    const { nome, email, senha, rua, numero, bairro,
+      cidade, estado, cep, telefone } = values;
 
-    let senha_formatada = FormatadorCrypto.mensagemSHA512(senha);
-    let data_modificacao_cadastro = FormatadorDados.GeradorDataHoraFormatada("yyyy-MM-dd HH:mm:ss");
+    let senha_formatada = FormatadorCrypto
+      .mensagemSHA512(senha);
+
+    let data_hora_formatada = FormatadorDados
+      .GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
 
     const data = {
       'id': id,
       'nome': nome,
       'email': email,
       'senha': senha_formatada,
-      'data_modificacao_cadastro': data_modificacao_cadastro,
+      'rua': rua,
+      'numero': numero,
+      'bairro': bairro,
+      'cidade': cidade,
+      'estado': estado,
+      'cep': cep,
+      'telefone': telefone,
+      'data_modificacao_cadastro': data_hora_formatada,
     };
 
-    await api.put(`usuario/${id}`, data)
+    await api.put(`cliente/${id}`, data)
       .then(() => {
         ModalSucessoCadastro();
-        navigation(`/usuario/${id}`);
+        navigation(`/cliente/${id}`);
       }).catch((error) => {
         ModalErroCadastro();
         console.error(error);
@@ -62,17 +83,14 @@ export function ClienteEdicao() {
   }
 
   return (
-    <ContainerApp>
+    <ContainerApp titulo="Edição de dados">
       <Row>
-        <Col md={12}>
-          <Titulo tag="h1" className="w-100 text-center mb-5">Edição de dados</Titulo>
-        </Col>
         <FormularioUsuario
           initialValues={dadosDoUsuario}
           validationSchema={validacaoSchemaFormularioUsuario}
           onSubmit={handleSubmit}
           enableReinitialize
-          voltarLink={`/usuario/${id}`}
+          voltarLink={`/cliente/${id}`}
         />
       </Row>
     </ContainerApp>

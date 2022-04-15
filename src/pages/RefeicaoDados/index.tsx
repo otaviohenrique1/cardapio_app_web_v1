@@ -10,6 +10,7 @@ import api from "../../utils/api";
 import { ConversorListas } from "../../utils/ConversorListas";
 import { FormatadorDados } from "../../utils/FormatadorDados";
 import { valoresIniciaisRefeicao } from "../../utils/constantes";
+import { BotaoLink, BotaoLinkVoltar } from "../../components/Botoes/BotaoLink";
 
 export function RefeicaoDados() {
   const [data, setData] = useState<RefeicaoTypes>(valoresIniciaisRefeicao);
@@ -22,8 +23,12 @@ export function RefeicaoDados() {
       .then((item) => {
         const { nome, preco, ingredientes, descricao, imagens } = item.data;
 
-        let preco_formatado = FormatadorDados.FormataValorMonetarioTexto(preco);
-        let ingredientes_lista = ConversorListas.ConverteStringParaArrayObjetos(ingredientes);
+        let preco_formatado = FormatadorDados
+          .FormataValorMonetarioTexto(preco);
+
+        let ingredientes_lista = ConversorListas
+          .ConverteStringParaArrayObjetos(ingredientes);
+
         let imagem_lista = [...imagens];
 
         console.log(`-----------------------`);
@@ -89,11 +94,12 @@ export function RefeicaoDados() {
           </Col>
         </Row>
       </ContainerApp>
-      <BotaoVoltar to="/" className="btn btn-lg btn-primary position-absolute bottom-0 w-100 rounded-0">Voltar</BotaoVoltar>
+      <BotaoLinkVoltar
+        to={`/home`}
+        color="primary"
+        className="btn-lg position-absolute bottom-0 w-100 rounded-0"
+        font_size={'27px'}
+      >Voltar</BotaoLinkVoltar>
     </>
   );
 }
-
-const BotaoVoltar = styled(Link)`
-  font-size: 27px;
-`;
