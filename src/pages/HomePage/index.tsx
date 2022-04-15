@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { Row } from "reactstrap";
 import { ContainerApp } from "../../components/ContainerApp";
-import { Lista, ListaVazia } from "../../components/Lista";
-import api from "../../utils/api";
+import { ListaRefeicao } from "../../components/Listas/ListaRefeicao";
+import { ListaVazia } from "../../components/Listas/ListaVazia";
+import { ModalErroDadosNaoCarregados } from "../../components/Modals";
+import api, { id_empresa_cliente } from "../../utils/api";
 
 export function HomePage() {
-  const [data, setData] = useState<ListaRefeicaoTypes[]>([]);
+  const [data, setData] = useState<RefeicaoListaTypes[]>([]);
 
   useEffect(() => {
-    api.get('/refeicao')
+    api.get(`refeicao/cardapio/${id_empresa_cliente}`)
       .then((data) => {
         let lista = [...data.data];
         let listaFiltrada = lista.filter((item) => {
@@ -17,8 +19,9 @@ export function HomePage() {
         let validaLista = (listaFiltrada) ? listaFiltrada : [];
         setData(validaLista);
       })
-      .catch((erro) => {
-        console.log('Erro', `${erro}`);
+      .catch((error) => {
+        ModalErroDadosNaoCarregados();
+        console.error(error);
       });
   }, []);
 
@@ -28,7 +31,7 @@ export function HomePage() {
         {(data.length === 0) ? (
           <ListaVazia />
         ) : (
-          <Lista data={data} />
+          <ListaRefeicao data={data} />
         )}
       </Row>
     </ContainerApp>
