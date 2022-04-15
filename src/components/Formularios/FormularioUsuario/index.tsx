@@ -1,9 +1,11 @@
 import { Form, Formik, FormikHelpers } from "formik";
 import { To } from "react-router-dom";
 import { ButtonGroup, Col, Row } from "reactstrap";
+import { lista_estados } from "../../../utils/constantes";
 import { Botao } from "../../Botoes/Botao";
 import { BotaoLink } from "../../Botoes/BotaoLink";
 import { CampoInput } from "../../Campos/CampoInput";
+import { CampoSelect } from "../../Campos/CampoSelect";
 
 interface FormularioUsuarioProps {
   initialValues: UsuarioTypes;
@@ -57,6 +59,83 @@ export function FormularioUsuario(props: FormularioUsuarioProps) {
                 value={values.senha}
                 error={errors.senha}
                 touched={touched.senha}
+              />
+              <CampoInput
+                md={12}
+                id="rua"
+                label="Rua"
+                name="rua"
+                type="text"
+                placeholder="Digite a sua rua"
+                value={values.rua}
+                error={errors.rua}
+                touched={touched.rua}
+              />
+              <CampoInput
+                md={12}
+                id="numero"
+                label="numero"
+                name="numero"
+                type="text"
+                placeholder="Digite o numero da casa"
+                value={`${values.numero}`}
+                error={errors.numero}
+                touched={touched.numero}
+              />
+              <CampoInput
+                md={12}
+                id="bairro"
+                label="Bairro"
+                name="bairro"
+                type="text"
+                placeholder="Digite o seu bairro"
+                value={values.bairro}
+                error={errors.bairro}
+                touched={touched.bairro}
+              />
+              <CampoInput
+                md={12}
+                id="cidade"
+                label="Cidade"
+                name="cidade"
+                type="text"
+                placeholder="Digite a sua cidade"
+                value={values.cidade}
+                error={errors.cidade}
+                touched={touched.cidade}
+              />
+              <CampoSelect
+                md={12}
+                id="estado"
+                label="Estado"
+                name="estado"
+                placeholder="Digite o seu estado"
+                data={lista_estados}
+                value={values.estado}
+                error={errors.estado}
+                touched={touched.estado}
+              />
+              <CampoInput
+                md={12}
+                id="cep"
+                label="cep"
+                name="cep"
+                type="text"
+                placeholder="Digite o seu cep"
+                value={`${values.cep}`}
+                error={errors.cep}
+                touched={touched.cep}
+              />
+              <CampoInput
+                md={12}
+                id="telefone"
+                label="telefone"
+                name="telefone"
+                type="tel"
+                placeholder="Digite o seu telefone"
+                value={values.telefone}
+                error={errors.telefone}
+                touched={touched.telefone}
               />
               <Col md={12} className="d-flex justify-content-end mt-5">
                 <ButtonGroup>
