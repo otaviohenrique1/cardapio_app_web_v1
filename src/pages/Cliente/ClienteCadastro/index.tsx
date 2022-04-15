@@ -5,7 +5,7 @@ import { Titulo } from "../../../components/Titulo";
 import { FormularioUsuario } from "../../../components/Formularios/FormularioUsuario";
 import { ModalErroCadastro, ModalSucessoCadastro } from "../../../components/Modals";
 import api from "../../../utils/api";
-import { valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
+import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { FormatadorCrypto } from "../../../utils/FormatadorCrypto";
 import { validacaoSchemaFormularioUsuario } from "../../../utils/ValidacaoSchemas";
@@ -14,20 +14,31 @@ export function ClienteCadastro() {
   const navigate = useNavigate();
 
   async function onSubmit(values: UsuarioTypes, helpers: FormikHelpers<UsuarioTypes>) {
-    const { nome, email, senha } = values;
+    const { nome, email, senha, rua, numero, bairro,
+      cidade, estado, cep, telefone } = values;
 
-    let senha_formatada = FormatadorCrypto.mensagemSHA512(senha);
-    let data_hora_formatada = FormatadorDados.GeradorDataHoraFormatada("yyyy-MM-dd HH:mm:ss");
+    let senha_formatada = FormatadorCrypto
+      .mensagemSHA512(senha);
+
+    let data_hora_formatada = FormatadorDados
+      .GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
 
     const data = {
       'nome': nome,
       'email': email,
       'senha': senha_formatada,
+      'rua': rua,
+      'numero': numero,
+      'bairro': bairro,
+      'cidade': cidade,
+      'estado': estado,
+      'cep': cep,
+      'telefone': telefone,
       'data_cadastro': data_hora_formatada,
       'data_modificacao_cadastro': data_hora_formatada,
     };
 
-    await api.post('usuario', data)
+    await api.post('cliente', data)
       .then(() => {
         ModalSucessoCadastro();
         helpers.resetForm();
