@@ -54,8 +54,8 @@ export function CampoIngredientes(props: CampoIngredientesProps) {
                     <Col md={12}>
                       <ErrorMessage
                         name={`ingredientes.${index}.nome`}
-                        component="div"
-                        className="field-error"
+                        component="span"
+                        className="alert alert-danger"
                       />
                     </Col>
                   </Row>
