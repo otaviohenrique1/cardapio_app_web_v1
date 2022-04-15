@@ -24,7 +24,8 @@ type CampoInputTypes =
   "text" |
   "number" |
   "email" |
-  "password";
+  "password" |
+  "tel";
 
 /* Parte do Login */
 interface LoginTypes {
@@ -42,6 +43,13 @@ interface UsuarioTypes {
   nome: string;
   email: string;
   senha: string;
+  rua: string;
+  numero: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
+  cep: string;
+  telefone: string;
 }
 
 interface UsuarioDadosTypes extends UsuarioTypes {
