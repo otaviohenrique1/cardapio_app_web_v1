@@ -15,7 +15,7 @@ export function RoutesApp() {
         <Route path="/cliente/cadastro" element={<ClienteCadastro/>} />
         <Route path="/cliente/:id" element={<ClienteDados/>} />
         <Route path="/cliente/:id/edicao" element={<ClienteEdicao />} />
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/homepage" element={<HomePage />} />
         <Route path="/refeicao/:id" element={<RefeicaoDados />} />
         <Route element={<Pagina404 />} path="*" />
       </Routes>
