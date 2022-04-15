@@ -23,7 +23,7 @@ export function HeaderApp(props: HeaderAppProps) {
       <Collapse navbar isOpen={aberto}>
         <Nav className="me-auto d-flex justify-content-between w-100" navbar>
           <NavItem>
-            <Link to="/" className="nav-link text-white">Inicio</Link>
+            <Link to="/homepage" className="nav-link text-white">Inicio</Link>
           </NavItem>
         </Nav>
       </Collapse>
