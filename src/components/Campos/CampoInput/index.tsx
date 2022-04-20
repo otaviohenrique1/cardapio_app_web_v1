@@ -16,23 +16,24 @@ interface CampoInputProps {
 }
 
 export function CampoInput(props: CampoInputProps) {
+  const { md, label, id, name, type, value, placeholder, error, touched } = props;
+
   return (
-    <Col md={props.md} className="d-flex flex-column mt-3">
+    <Col md={md} className="d-flex flex-column mt-3">
       <Label
         className="form-label"
-        htmlFor={props.id}
-      >{props.label}</Label>
-      <input type="text" />
+        htmlFor={id}
+      >{label}</Label>
       <Field
         className="form-control"
-        id={props.id}
-        name={props.name}
-        type={props.type}
-        value={props.value}
-        placeholder={props.placeholder}
+        id={id}
+        name={name}
+        type={type}
+        value={value}
+        placeholder={placeholder}
       />
-      {props.error && props.touched
-        ? (<AlertMensagemErro>{props.error}</AlertMensagemErro>) : null}
+      {error && touched
+        ? (<AlertMensagemErro>{error}</AlertMensagemErro>) : null}
     </Col>
   );
 }
