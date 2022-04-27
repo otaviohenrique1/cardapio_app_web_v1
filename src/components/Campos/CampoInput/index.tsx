@@ -3,7 +3,7 @@ import { Col, Label } from "reactstrap";
 import { ColumnProps } from "reactstrap/types/lib/Col";
 import { AlertMensagemErro } from "../../AlertMensagem/AlertMensagemErro";
 
-interface CampoInputProps {
+export interface CampoInputProps {
   md: ColumnProps;
   label: string;
   id: string;
