@@ -8,20 +8,30 @@ import {
   MAXIMO_CARACTERES
 } from "./constantes";
 
-const nome = Yup
+export const nome = Yup
   .string()
   .required(Mensagem.MensagemErro("nome"));
 
-const email = Yup
+export const email = Yup
   .string()
   .email(Mensagem.MensagemSimples(EMAIL_INVALIDO))
   .required(Mensagem.MensagemErro("email"));
 
-const senha = Yup
+export const senha = Yup
   .string()
   .min(valor_minimo_carateres, MINIMO_CARACTERES)
   .max(valor_maximo_carateres, MAXIMO_CARACTERES)
   .required(Mensagem.MensagemErro("senha"));
+
+export const confirmacao_senha = Yup
+  .string()
+  .when("senha", {
+    is: (val: string) => (val && val.length > 0 ? true : false),
+    then: Yup.string().oneOf(
+      [Yup.ref("senha")],
+      "As senhas não são iguais!"
+    )
+  });
 
 export const valida_rua = Yup
   .string()
@@ -52,7 +62,7 @@ export const valida_telefone = Yup
   .required(Mensagem.MensagemErro('telefone'));
 
 export const validacaoSchemaFormularioUsuario = Yup.object().shape({
-  nome, email, senha, valida_rua, valida_numero, valida_bairro,
+  nome, email, senha, confirmacao_senha, valida_rua, valida_numero, valida_bairro,
   valida_cidade, valida_estado, valida_cep, valida_telefone
 });
 

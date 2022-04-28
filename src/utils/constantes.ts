@@ -64,7 +64,8 @@ export const valoresIniciaisFormularioCliente: ClienteTypes = {
   cidade: "",
   estado: "",
   cep: "",
-  telefone: ""
+  telefone: "",
+  confirmacao_senha: ""
 };
 
 export const valoresIniciaisFichaDadosCliente: ClienteDadosTypes = {
@@ -81,7 +82,8 @@ export const valoresIniciaisFichaDadosCliente: ClienteDadosTypes = {
   cep: "",
   telefone: "",
   data_cadastro: "",
-  data_modificacao_cadastro: ""
+  data_modificacao_cadastro: "",
+  confirmacao_senha: ""
 };
 
 export const dadosIniciaisFormularioLogin: LoginTypes = {

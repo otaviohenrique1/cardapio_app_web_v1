@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Row } from "reactstrap";
 import { ContainerApp } from "../../../components/ContainerApp";
-import { FormularioUsuario } from "../../../components/Formularios/FormularioUsuario";
+import { FormularioCliente } from "../../../components/Formularios/FormularioCliente";
 import { ModalErroCadastro, ModalSucessoCadastro } from "../../../components/Modals";
 import { ApiBuscaDadosUmCliente, ApiEdicaoCliente } from "../../../utils/api";
 import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioCliente } from "../../../utils/constantes";
@@ -23,9 +23,12 @@ export function ClienteEdicao() {
     ApiBuscaDadosUmCliente(id)
       .then((item) => {
         let { nome, email, senha, rua, numero, bairro,
-          cidade, estado, cep, telefone } = item.data;
-        let data = { nome, email, senha, rua, numero, bairro,
-          cidade, estado, cep, telefone };
+          cidade, estado, cep, telefone, confirmacao_senha } = item.data;
+        let data: ClienteTypes = {
+          nome, email, senha, rua, numero, bairro,
+          cidade, estado, cep, telefone,
+          confirmacao_senha
+        };
 
         setData(data);
       })
@@ -34,19 +37,6 @@ export function ClienteEdicao() {
         console.error(error);
       });
   }, [id]);
-
-  const dadosDoUsuario: ClienteTypes = {
-    nome: data.nome || "",
-    email: data.email || "",
-    senha: data.senha || "",
-    rua: data.rua || "",
-    numero: data.numero || "",
-    bairro: data.bairro || "",
-    cidade: data.cidade || "",
-    estado: data.estado || "",
-    cep: data.cep || "",
-    telefone: data.telefone || ""
-  };
 
   async function handleSubmit(values: ClienteTypes) {
     if (!id) { return; }
@@ -86,15 +76,35 @@ export function ClienteEdicao() {
       });
   }
 
+  const { nome, email, senha, rua, numero, bairro, cidade, estado, cep, telefone, confirmacao_senha } = data;
+
+  const dadosDoUsuario: ClienteTypes = {
+    nome: nome || "",
+    email: email || "",
+    senha: "",
+    rua: rua || "",
+    numero: numero || "",
+    bairro: bairro || "",
+    cidade: cidade || "",
+    estado: estado || "",
+    cep: cep || "",
+    telefone: telefone || "",
+    confirmacao_senha: confirmacao_senha || ""
+  };
+
+  const senha_antiga = FormatadorDados.FormataExibicaoSenha(senha.slice(0, 12));
+
   return (
     <ContainerApp titulo="Edição de dados">
       <Row>
-        <FormularioUsuario
+        <FormularioCliente
           initialValues={dadosDoUsuario}
           validationSchema={validacaoSchemaFormularioUsuario}
           onSubmit={handleSubmit}
           enableReinitialize
           voltarLink={`/cliente/${id}`}
+          exibe_senha_antiga={true}
+          senha_antiga={senha_antiga}
         />
       </Row>
     </ContainerApp>

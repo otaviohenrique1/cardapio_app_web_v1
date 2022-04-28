@@ -43,6 +43,7 @@ interface ClienteTypes {
   nome: string;
   email: string;
   senha: string;
+  confirmacao_senha: string;
   rua: string;
   numero: string;
   bairro: string;

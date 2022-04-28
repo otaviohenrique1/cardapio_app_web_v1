@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 import { FormikHelpers } from "formik";
 import { Titulo } from "../../../components/Titulo";
-import { FormularioUsuario } from "../../../components/Formularios/FormularioUsuario";
+import { FormularioCliente } from "../../../components/Formularios/FormularioCliente";
 import { ModalErroCadastro, ModalSucessoCadastro } from "../../../components/Modals";
 import { ApiCadastroCliente, ApiCadastroClienteTypes } from "../../../utils/api";
 import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioCliente } from "../../../utils/constantes";
@@ -54,12 +54,14 @@ export function ClienteCadastro() {
         <Col md={12}>
           <Titulo tag="h1">Novo Usuário</Titulo>
         </Col>
-        <FormularioUsuario
+        <FormularioCliente
           initialValues={valoresIniciaisFormularioCliente}
           validationSchema={validacaoSchemaFormularioUsuario}
           onSubmit={onSubmit}
           enableReinitialize={false}
           voltarLink="/"
+          exibe_senha_antiga={true}
+          senha_antiga={""}
         />
       </Row>
     </Container>

@@ -33,7 +33,8 @@ export function ClienteFichaDados() {
 
         const data: ClienteDadosTypes = {
           id, nome, email, senha: senha_formatada, codigo, rua, numero, bairro, cidade, estado, cep, telefone,
-          data_cadastro: data_cadastro_formatada, data_modificacao_cadastro: data_modificacao_cadastro_formatada
+          data_cadastro: data_cadastro_formatada, data_modificacao_cadastro: data_modificacao_cadastro_formatada,
+          confirmacao_senha: ""
         };
 
         setData(data);
