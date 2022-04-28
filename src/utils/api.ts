@@ -72,22 +72,6 @@ export function ApiBuscaDadosTodasRefeicoes(id: string) {
   return api.get(`refeicao/cardapio/${id}`);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ApiBuscaLoginCliente */
 export interface ApiBuscaLoginClienteTypes {
   data: { email: string; senha: string; };

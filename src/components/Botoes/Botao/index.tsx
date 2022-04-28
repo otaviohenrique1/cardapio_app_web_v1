@@ -7,10 +7,12 @@ interface BotaoProps extends ButtonProps {
 }
 
 export function Botao(props: BotaoProps) {
+  const { children, color } = props;
+
   return (
     <Button
       {...props}
-      color={props.color}
-    >{props.children}</Button>
+      color={color}
+    >{children}</Button>
   );
 }

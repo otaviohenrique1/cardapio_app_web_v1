@@ -12,10 +12,12 @@ interface CampoIngredientesProps {
 }
 
 export function CampoIngredientes(props: CampoIngredientesProps) {
+  const { ingredientes } = props;
+
   return (
     <Col md={12} className="d-flex flex-column pt-3 pb-3 mt-3 mb-3 border-dark border-top border-bottom">
       <FieldArray name="ingredientes">
-        {({ insert, remove, push }) => (
+        {({ remove, push }) => (
           <Row>
             <Col md={12} className="d-flex flex-row justify-content-between pb-1">
               <Titulo tag="h6" className="fw-normal">Lista de ingredientes</Titulo>
@@ -29,8 +31,8 @@ export function CampoIngredientes(props: CampoIngredientesProps) {
                 <GrAddCircle size={25} className="m-0 p-0" />
               </Botao>
             </Col>
-            {props.ingredientes.length > 0 &&
-              props.ingredientes.map((ingrediente, index) => (
+            {ingredientes.length > 0 &&
+              ingredientes.map((ingrediente, index) => (
                 <Col md={6} key={index} className="p-2">
                   <Row>
                     <Col md={12}>

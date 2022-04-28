@@ -6,10 +6,9 @@ interface AlertMensagemErroProps extends AlertProps {
 }
 
 export function AlertMensagemErro(props: AlertMensagemErroProps) {
+  const { children } = props;
+
   return (
-    <Alert
-      color="danger"
-      {...props}
-    >{props.children}</Alert>
+    <Alert color="danger" {...props}>{children}</Alert>
   );
 }

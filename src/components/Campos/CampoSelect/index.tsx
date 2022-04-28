@@ -21,22 +21,21 @@ interface CampoSelectProps {
 }
 
 export function CampoSelect(props: CampoSelectProps) {
+  const { md, label, id, name, value, placeholder, error, touched, data } = props;
+
   return (
-    <Col md={props.md} className="d-flex flex-column mt-3">
-      <Label
-        className="form-label"
-        htmlFor={props.id}
-      >{props.label}</Label>
+    <Col md={md} className="d-flex flex-column mt-3">
+      <Label className="form-label" htmlFor={id}>{label}</Label>
       <Field
         className="form-select"
-        id={props.id}
-        name={props.name}
-        value={props.value}
-        placeholder={props.placeholder}
+        id={id}
+        name={name}
+        value={value}
+        placeholder={placeholder}
         as="select"
       >
         <option value="">Selecione</option>
-        {props.data.map((item, index) => {
+        {data.map((item, index) => {
           const { valor, texto } = item;
           const data = { texto, valor };
           return (
@@ -44,8 +43,7 @@ export function CampoSelect(props: CampoSelectProps) {
           );
         })}
       </Field>
-      {props.error && props.touched
-        ? (<AlertMensagemErro>{props.error}</AlertMensagemErro>) : null}
+      {error && touched ? (<AlertMensagemErro>{error}</AlertMensagemErro>) : null}
     </Col>
   );
 }
@@ -55,9 +53,9 @@ interface CampoSelectItemProps {
 }
 
 function CampoSelectItem(props: CampoSelectItemProps) {
+  const { valor, texto } = props.data;
+
   return (
-    <option value={props.data.valor}>
-      {props.data.texto}
-    </option>
+    <option value={valor}>{texto}</option>
   );
 }
