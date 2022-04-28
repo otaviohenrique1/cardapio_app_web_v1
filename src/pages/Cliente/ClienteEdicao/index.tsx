@@ -4,14 +4,14 @@ import { Row } from "reactstrap";
 import { ContainerApp } from "../../../components/ContainerApp";
 import { FormularioUsuario } from "../../../components/Formularios/FormularioUsuario";
 import { ModalErroCadastro, ModalSucessoCadastro } from "../../../components/Modals";
-import api from "../../../utils/api";
-import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
+import { ApiBuscaDadosUmCliente, ApiEdicaoCliente } from "../../../utils/api";
+import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioCliente } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { FormatadorCrypto } from "../../../utils/FormatadorCrypto";
 import { validacaoSchemaFormularioUsuario } from "../../../utils/ValidacaoSchemas";
 
 export function ClienteEdicao() {
-  const [data, setData] = useState<UsuarioTypes>(valoresIniciaisFormularioUsuario);
+  const [data, setData] = useState<ClienteTypes>(valoresIniciaisFormularioCliente);
   const navigation = useNavigate();
 
   let { id } = useParams();
@@ -19,7 +19,8 @@ export function ClienteEdicao() {
   useEffect(() => {
     if (!id) { return; }
 
-    api.get(`cliente/${id}`)
+    // api.get(`cliente/${id}`)
+    ApiBuscaDadosUmCliente(id)
       .then((item) => {
         let { nome, email, senha, rua, numero, bairro,
           cidade, estado, cep, telefone } = item.data;
@@ -34,7 +35,7 @@ export function ClienteEdicao() {
       });
   }, [id]);
 
-  const dadosDoUsuario: UsuarioTypes = {
+  const dadosDoUsuario: ClienteTypes = {
     nome: data.nome || "",
     email: data.email || "",
     senha: data.senha || "",
@@ -47,7 +48,9 @@ export function ClienteEdicao() {
     telefone: data.telefone || ""
   };
 
-  async function handleSubmit(values: UsuarioTypes) {
+  async function handleSubmit(values: ClienteTypes) {
+    if (!id) { return; }
+
     const { nome, email, senha, rua, numero, bairro,
       cidade, estado, cep, telefone } = values;
 
@@ -72,7 +75,8 @@ export function ClienteEdicao() {
       'data_modificacao_cadastro': data_hora_formatada,
     };
 
-    await api.put(`cliente/${id}`, data)
+    // await api.put(`cliente/${id}`, data)
+    await ApiEdicaoCliente(data)
       .then(() => {
         ModalSucessoCadastro();
         navigation(`/cliente/${id}`);

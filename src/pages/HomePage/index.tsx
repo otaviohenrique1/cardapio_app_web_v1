@@ -4,13 +4,14 @@ import { ContainerApp } from "../../components/ContainerApp";
 import { ListaRefeicao } from "../../components/Listas/ListaRefeicao";
 import { ListaVazia } from "../../components/Listas/ListaVazia";
 import { ModalErroDadosNaoCarregados } from "../../components/Modals";
-import api, { id_empresa_cliente } from "../../utils/api";
+import { ApiBuscaDadosTodasRefeicoes, id_empresa_cliente } from "../../utils/api";
 
 export function HomePage() {
   const [data, setData] = useState<RefeicaoListaTypes[]>([]);
 
   useEffect(() => {
-    api.get(`refeicao/cardapio/${id_empresa_cliente}`)
+    // api.get(`refeicao/cardapio/${id_empresa_cliente}`)
+    ApiBuscaDadosTodasRefeicoes(id_empresa_cliente)
       .then((data) => {
         let lista = [...data.data];
         let listaFiltrada = lista.filter((item) => {

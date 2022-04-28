@@ -6,14 +6,16 @@ export interface ItemListaFichaDadosBaseTypes {
   valor: string | number | JSX.Element /* any */;
 }
 
-interface ListaFichaDadosProps {
+export interface ListaFichaDadosProps {
   data: ItemListaFichaDadosBaseTypes[];
 }
 
 export function ListaFichaDados(props: ListaFichaDadosProps) {
+  const { data } = props;
+
   return (
     <ListGroup>
-      {props.data.map((item, index) => {
+      {data.map((item, index) => {
         const { titulo, valor } = item;
         const data = { titulo, valor };
         return (
@@ -33,10 +35,12 @@ interface ItemListaFichaDadosProps {
 }
 
 function ItemListaFichaDados(props: ItemListaFichaDadosProps) {
+  const { titulo, valor } = props.data;
+
   return (
     <ListGroupItem className="d-flex flex-row justify-content-between">
-      <Titulo tag="h5" className="w-100">{props.data.titulo}</Titulo>
-      <Titulo tag="h6" className="w-100">{props.data.valor}</Titulo>
+      <Titulo tag="h5" className="w-100">{titulo}</Titulo>
+      <Titulo tag="h6" className="w-100">{valor}</Titulo>
     </ListGroupItem>
   );
 }

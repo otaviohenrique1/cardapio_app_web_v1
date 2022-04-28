@@ -4,8 +4,8 @@ import { Login } from "./Login";
 import { Pagina404 } from "./Pagina404";
 import { RefeicaoDados } from "./RefeicaoDados";
 import { ClienteCadastro } from "./Cliente/ClienteCadastro";
-import { ClienteDados } from "./Cliente/ClienteDados";
 import { ClienteEdicao } from "./Cliente/ClienteEdicao";
+import { ClienteFichaDados } from "./Cliente/ClienteFichaDados";
 
 export function RoutesApp() {
   return (
@@ -13,7 +13,7 @@ export function RoutesApp() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/cliente/cadastro" element={<ClienteCadastro/>} />
-        <Route path="/cliente/:id" element={<ClienteDados/>} />
+        <Route path="/cliente/:id" element={<ClienteFichaDados/>} />
         <Route path="/cliente/:id/edicao" element={<ClienteEdicao />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/refeicao/:id" element={<RefeicaoDados />} />

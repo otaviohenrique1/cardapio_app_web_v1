@@ -1,96 +1,74 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Col, Row } from "reactstrap";
-import styled from "styled-components";
 import { ContainerApp } from "../../components/ContainerApp";
 import { Titulo } from "../../components/Titulo";
 import { ModalErroDadosNaoCarregados } from "../../components/Modals";
 import { ListaIngredientes } from "../../components/Listas/ListaIngredientes";
-import api from "../../utils/api";
-import { ConversorListas } from "../../utils/ConversorListas";
+import { ApiBuscaDadosUmaRefeicao } from "../../utils/api";
 import { FormatadorDados } from "../../utils/FormatadorDados";
-import { valoresIniciaisRefeicao } from "../../utils/constantes";
-import { BotaoLink, BotaoLinkVoltar } from "../../components/Botoes/BotaoLink";
+import { valoresIniciaisRefeicaoFichaTypes } from "../../utils/constantes";
+import { BotaoLinkVoltar } from "../../components/Botoes/BotaoLink";
+import { CarouselFotos } from "../../components/Carousel";
 
 export function RefeicaoDados() {
-  const [data, setData] = useState<RefeicaoTypes>(valoresIniciaisRefeicao);
+  const [data, setData] = useState<RefeicaoDadosFichaTypes>(valoresIniciaisRefeicaoFichaTypes);
   const { id } = useParams();
 
   useEffect(() => {
     if (!id) { return; }
-
-    api.get(`/refeicao/${id}`)
+    
+    // api.get(`refeicao/${id}`)
+    ApiBuscaDadosUmaRefeicao(id)
       .then((item) => {
+        if (!id) { return; }
+
         const { nome, preco, ingredientes, descricao, imagens } = item.data;
 
-        let preco_formatado = FormatadorDados
-          .FormataValorMonetarioTexto(preco);
+        const preco_formatado = FormatadorDados.FormataValorMonetarioTexto(preco);
 
-        let ingredientes_lista = ConversorListas
-          .ConverteStringParaArrayObjetos(ingredientes);
+        const ingredientes_lista_formatada = [...ingredientes] as IngredientesTypes[];
+        const imagens_lista = [...imagens] as FotoTypes[];
 
-        let imagem_lista = [...imagens];
+        const data: RefeicaoDadosFichaTypes = {
+          id,
+          nome: String(nome),
+          preco: preco_formatado,
+          ingredientes: ingredientes_lista_formatada,
+          descricao: String(descricao),
+          imagens_galeria: imagens_lista,
+        };
 
-        console.log(`-----------------------`);
-        console.log("ID");
-        console.log(id);
-        console.log(`-----------------------`);
-        console.log("Nome");
-        console.log(nome);
-        console.log(`-----------------------`);
-        console.log("Preço");
-        console.log(preco);
-        console.log(`-----------------------`);
-        console.log("Preço formatado");
-        console.log(preco_formatado);
-        console.log(`-----------------------`);
-        console.log("Ingredientes");
-        console.log(ingredientes);
-        console.log(`-----------------------`);
-        console.log("Ingredientes");
-        console.log(ingredientes_lista);
-        console.log(`-----------------------`);
-        console.log("Descrição");
-        console.log(descricao);
-        console.log(`-----------------------`);
-        console.log("Imagens");
-        console.log(imagens);
-        console.log(`-----------------------`);
-        console.log("Imagens lista");
-        console.log(imagem_lista);
-        console.log(`-----------------------`);
-
-        // setData({
-        //   nome: String(nome),
-        //   preco: preco_formatado,
-        //   ingredientes: ingredientes_lista,
-        //   descricao: String(descricao),
-        //   imagens: imagem_lista
-        // });
+        setData(data);
       })
       .catch((error) => {
         ModalErroDadosNaoCarregados();
         console.error(error);
       });
-
   }, [id]);
+
+  const { nome, preco, ingredientes, descricao, imagens_galeria } = data;
 
   return (
     <>
       <ContainerApp titulo="Cardapio">
         <Row className="mt-4">
           <Col md={12} className="pb-4">
-            <Titulo tag="h1" className="w-100 text-center">{data.nome}</Titulo>
+            <Titulo tag="h1" className="w-100 text-center">{nome}</Titulo>
           </Col>
-          <Col md={12}>
-            <Titulo tag="h1" className="fw-bold">Local da(s) imagem(s)</Titulo>
+          <Col md={12} className="pt-3 pb-3 d-flex border-bottom border-dark">
+            <CarouselFotos data={imagens_galeria} />
           </Col>
-          <Col md={12} className="pt-3 pb-3 ms d-flex flex-row justify-content-between border-top border-bottom border-dark">
+          <Col md={12} className="pt-3 pb-3 d-flex flex-row justify-content-between  border-bottom border-dark">
             <Titulo tag="h2" className="fw-bold">Preço (R$)</Titulo>
-            <Titulo tag="h2">{data.preco}</Titulo>
+            <Titulo tag="h2">{preco}</Titulo>
           </Col>
-          <Col md={12} className="pt-3">
-            <ListaIngredientes data={data.ingredientes} />
+          <Col md={12} className="pt-3 pb-3 d-flex flex-column border-bottom border-dark">
+            <Titulo tag="h2" className="fw-bold">Descrição</Titulo>
+            <Titulo tag="h2">{descricao}</Titulo>
+          </Col>
+          <Col md={12} className="pt-3 border-bottom border-dark">
+            <ListaIngredientes data={ingredientes} />
           </Col>
         </Row>
       </ContainerApp>

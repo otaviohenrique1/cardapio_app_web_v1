@@ -33,13 +33,13 @@ interface LoginTypes {
   senha: string;
 }
 
-interface UsuarioLogadoTypes {
+interface ClienteLogadoTypes {
   id: string;
   nome: string;
 }
 
 /* Parte do Usuario */
-interface UsuarioTypes {
+interface ClienteTypes {
   nome: string;
   email: string;
   senha: string;
@@ -52,7 +52,7 @@ interface UsuarioTypes {
   telefone: string;
 }
 
-interface UsuarioDadosTypes extends UsuarioTypes {
+interface ClienteDadosTypes extends ClienteTypes {
   id: string;
   codigo: string;
   data_cadastro: string;
@@ -60,6 +60,17 @@ interface UsuarioDadosTypes extends UsuarioTypes {
 }
 
 /* Parte da Refeicao */
+interface IngredientesTypes {
+  nome: string;
+  quantidade: number | string;
+}
+
+interface FotoTypes {
+  id: number;
+  url: string;
+  nome: string;
+}
+
 interface RefeicaoBaseTypes {
   nome: string;
   preco: number;
@@ -69,8 +80,16 @@ interface RefeicaoTypes extends RefeicaoBaseTypes {
   nome: string;
   preco: string | number;
   descricao: string;
-  ingredientes: Ingredientes[];
-  imagens: File[];
+  ingredientes: IngredientesTypes[];
+}
+
+interface RefeicaoDadosFichaTypes {
+  id: string;
+  nome: string;
+  preco: string | number;
+  descricao: string;
+  ingredientes: IngredientesTypes[];
+  imagens_galeria: FotoTypes[];
 }
 
 // interface RefeicaoDadosTypes extends RefeicaoTypes {

@@ -45,15 +45,16 @@ export const lista_estados = [
   { valor: "TO", texto: "Tocantins" }
 ];
 
-export const valoresIniciaisRefeicao: RefeicaoTypes = {
+export const valoresIniciaisRefeicaoFichaTypes: RefeicaoDadosFichaTypes = {
+  id: "",
   nome: "",
-  preco: 0,
-  ingredientes: [],
+  preco: "",
   descricao: "",
-  imagens: []
+  ingredientes: [],
+  imagens_galeria: [],
 };
 
-export const valoresIniciaisFormularioUsuario: UsuarioTypes = {
+export const valoresIniciaisFormularioCliente: ClienteTypes = {
   nome: "",
   email: "",
   senha: "",
@@ -66,12 +67,29 @@ export const valoresIniciaisFormularioUsuario: UsuarioTypes = {
   telefone: ""
 };
 
+export const valoresIniciaisFichaDadosCliente: ClienteDadosTypes = {
+  id: "",
+  codigo: "",
+  nome: "",
+  email: "",
+  senha: "",
+  rua: "",
+  numero: "",
+  bairro: "",
+  cidade: "",
+  estado: "",
+  cep: "",
+  telefone: "",
+  data_cadastro: "",
+  data_modificacao_cadastro: ""
+};
+
 export const dadosIniciaisFormularioLogin: LoginTypes = {
   email: "",
   senha: ""
 };
 
-export const dadosIniciaisUsuarioLogado: UsuarioLogadoTypes = {
+export const dadosIniciaisUsuarioLogado: ClienteLogadoTypes = {
   id: '',
   nome: ''
 };

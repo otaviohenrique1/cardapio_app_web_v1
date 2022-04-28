@@ -4,8 +4,8 @@ import { Form, Formik } from "formik";
 import { Titulo } from "../../components/Titulo";
 import { CampoInput, CampoInputProps } from "../../components/Campos/CampoInput";
 import { Botao } from "../../components/Botoes/Botao";
-import { ModalMensagem } from "../../components/Modals";
-import api from "../../utils/api";
+import { ModalMensagem, ModalMensagemProps } from "../../components/Modals";
+import { ApiBuscaLoginCliente } from "../../utils/api";
 import { dadosIniciaisFormularioLogin } from "../../utils/constantes";
 import { FormatadorCrypto } from "../../utils/FormatadorCrypto";
 import { schemaValidacaoFormularioLogin } from "../../utils/ValidacaoSchemas";
@@ -25,13 +25,13 @@ export function Login() {
     };
 
     const auth = {
-      auth: {
-        username: email,
-        password: senha_formatada
-      }
+      username: email,
+      password: senha_formatada
     };
 
-    await api.post('cliente/login', data, auth)
+    const data_login = { data, auth };
+    // await api.post('cliente/login', data, auth)
+    await ApiBuscaLoginCliente(data_login)
       .then((data) => {
         const { id, nome } = data.data.data_user;
         sessionStorage.setItem('id', String(id));
@@ -39,7 +39,13 @@ export function Login() {
         navigate('/home');
       })
       .catch((error) => {
-        ModalMensagem("error", "Erro", "Login inválido");
+        const data_modal: ModalMensagemProps = {
+          icone: "error",
+          titulo: "Erro",
+          mensagem: "Login inválido"
+        };
+
+        ModalMensagem(data_modal);
         console.error(error);
       });
   }

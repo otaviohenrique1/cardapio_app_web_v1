@@ -8,9 +8,11 @@ interface ListaProps {
 }
 
 export function ListaRefeicao(props: ListaProps) {
+  const { data } = props;
+
   return (
     <Col md={12}>
-      {props.data.map((item, index) => {
+      {data.map((item, index) => {
         return (
           <ListaRefeicaoItem key={index} data={item} />
         );
@@ -24,19 +26,21 @@ interface ListaRefeicaoItemProps {
 }
 
 function ListaRefeicaoItem(props: ListaRefeicaoItemProps) {
+  const { id, nome, preco } = props.data;
+
   const navigate = useNavigate();
 
   return (
     <ListGroup
       className="mb-3"
-      onClick={() => navigate(`/refeicao/${props.data.id}`)}
+      onClick={() => navigate(`/refeicao/${id}`)}
     >
       <ListGroupItem className="bg-info text-black">
-        <Titulo tag="h2">{props.data.nome}</Titulo>
+        <Titulo tag="h2">{nome}</Titulo>
       </ListGroupItem>
       <ListGroupItem className="d-flex flex-row justify-content-between bg-info text-black">
         <Titulo tag="h3" className="fw-bold">Preço (R$)</Titulo>
-        <Titulo tag="h3">{FormatadorDados.FormataValorMonetarioTexto(props.data.preco)}</Titulo>
+        <Titulo tag="h3">{FormatadorDados.FormataValorMonetarioTexto(preco)}</Titulo>
       </ListGroupItem>
     </ListGroup>
   );

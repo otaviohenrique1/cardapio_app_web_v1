@@ -4,8 +4,8 @@ import { FormikHelpers } from "formik";
 import { Titulo } from "../../../components/Titulo";
 import { FormularioUsuario } from "../../../components/Formularios/FormularioUsuario";
 import { ModalErroCadastro, ModalSucessoCadastro } from "../../../components/Modals";
-import api from "../../../utils/api";
-import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
+import { ApiCadastroCliente, ApiCadastroClienteTypes } from "../../../utils/api";
+import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioCliente } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { FormatadorCrypto } from "../../../utils/FormatadorCrypto";
 import { validacaoSchemaFormularioUsuario } from "../../../utils/ValidacaoSchemas";
@@ -13,17 +13,15 @@ import { validacaoSchemaFormularioUsuario } from "../../../utils/ValidacaoSchema
 export function ClienteCadastro() {
   const navigate = useNavigate();
 
-  async function onSubmit(values: UsuarioTypes, helpers: FormikHelpers<UsuarioTypes>) {
+  async function onSubmit(values: ClienteTypes, helpers: FormikHelpers<ClienteTypes>) {
     const { nome, email, senha, rua, numero, bairro,
       cidade, estado, cep, telefone } = values;
 
-    let senha_formatada = FormatadorCrypto
-      .mensagemSHA512(senha);
+    let senha_formatada = FormatadorCrypto.mensagemSHA512(senha);
 
-    let data_hora_formatada = FormatadorDados
-      .GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
+    let data_hora_formatada = FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
 
-    const data = {
+    const data: ApiCadastroClienteTypes = {
       'nome': nome,
       'email': email,
       'senha': senha_formatada,
@@ -38,7 +36,8 @@ export function ClienteCadastro() {
       'data_modificacao_cadastro': data_hora_formatada,
     };
 
-    await api.post('cliente', data)
+    // await api.post('cliente', data)
+    await ApiCadastroCliente(data)
       .then(() => {
         ModalSucessoCadastro();
         helpers.resetForm();
@@ -56,7 +55,7 @@ export function ClienteCadastro() {
           <Titulo tag="h1">Novo Usuário</Titulo>
         </Col>
         <FormularioUsuario
-          initialValues={valoresIniciaisFormularioUsuario}
+          initialValues={valoresIniciaisFormularioCliente}
           validationSchema={validacaoSchemaFormularioUsuario}
           onSubmit={onSubmit}
           enableReinitialize={false}

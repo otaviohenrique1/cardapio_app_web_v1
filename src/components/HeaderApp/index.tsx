@@ -8,6 +8,7 @@ interface HeaderAppProps {
 }
 
 export function HeaderApp(props: HeaderAppProps) {
+  const { titulo } = props;
   const [aberto, setAberto] = useState<boolean>(false);
   const toggle = () => {
     setAberto(!aberto)
@@ -17,7 +18,7 @@ export function HeaderApp(props: HeaderAppProps) {
     <Navbar color="dark" dark expand="sm" light>
       <NavbarBrand className="d-flex flex-row justify-content-center align-items-center">
         <MdMenuBook size={30} />
-        <Link className="fw-bold nav-link text-white" to='/'>{props.titulo}</Link>
+        <Link className="fw-bold nav-link text-white" to='/'>{titulo}</Link>
       </NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse navbar isOpen={aberto}>
