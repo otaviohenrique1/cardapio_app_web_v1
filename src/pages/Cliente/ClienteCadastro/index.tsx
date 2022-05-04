@@ -4,8 +4,8 @@ import { FormikHelpers } from "formik";
 import { Titulo } from "../../../components/Titulo";
 import { FormularioCliente } from "../../../components/Formularios/FormularioCliente";
 import { ModalErroCadastro, ModalSucessoCadastro } from "../../../components/Modals";
-import { ApiCadastroCliente, ApiCadastroClienteTypes } from "../../../utils/api";
-import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioCliente } from "../../../utils/constantes";
+import { ApiCadastroCliente, ApiCadastroClienteTypes, id_empresa_cliente } from "../../../utils/api";
+import { FORMATO_DATA_COM_HORA_3, valoresIniciaisCliente } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { FormatadorCrypto } from "../../../utils/FormatadorCrypto";
 import { validacaoSchemaFormularioUsuario } from "../../../utils/ValidacaoSchemas";
@@ -34,6 +34,7 @@ export function ClienteCadastro() {
       'telefone': telefone,
       'data_cadastro': data_hora_formatada,
       'data_modificacao_cadastro': data_hora_formatada,
+      'empresaId': id_empresa_cliente,
     };
 
     // await api.post('cliente', data)
@@ -55,12 +56,12 @@ export function ClienteCadastro() {
           <Titulo tag="h1">Novo Usuário</Titulo>
         </Col>
         <FormularioCliente
-          initialValues={valoresIniciaisFormularioCliente}
+          initialValues={valoresIniciaisCliente}
           validationSchema={validacaoSchemaFormularioUsuario}
           onSubmit={onSubmit}
           enableReinitialize={false}
           voltarLink="/"
-          exibe_senha_antiga={true}
+          exibe_senha_antiga={false}
           senha_antiga={""}
         />
       </Row>
