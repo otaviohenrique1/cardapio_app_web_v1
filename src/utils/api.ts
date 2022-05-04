@@ -26,6 +26,7 @@ export interface ApiCadastroClienteTypes {
   telefone: string;
   data_cadastro: string;
   data_modificacao_cadastro: string;
+  empresaId: string;
 }
 
 export function ApiCadastroCliente(data_cadastro: ApiCadastroClienteTypes) {
