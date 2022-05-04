@@ -1,11 +1,11 @@
 import { Form, Formik, FormikHelpers } from "formik";
 import { To } from "react-router-dom";
 import { ButtonGroup, Col, Row } from "reactstrap";
-import { lista_estados } from "../../../utils/constantes";
+import { lista_estados } from "../../../utils/listas";
 import { Botao } from "../../Botoes/Botao";
 import { BotaoLink } from "../../Botoes/BotaoLink";
 import { CampoInput, CampoInputProps } from "../../Campos/CampoInput";
-import { CampoSelect } from "../../Campos/CampoSelect";
+import { CampoSelectComErro } from "../../Campos/CampoSelect";
 import { CampoSenhaAntiga } from "../../Campos/CampoSenhaAntiga";
 
 interface FormularioClientesProps {
@@ -89,7 +89,7 @@ export function FormularioCliente(props: FormularioClientesProps) {
                 {(exibe_senha_antiga) ? (
                   <CampoSenhaAntiga senha_antiga={senha_antiga} />
                 ) : null}
-                <CampoSelect
+                <CampoSelectComErro
                   md={12}
                   id="estado"
                   label="Estado"
@@ -99,6 +99,7 @@ export function FormularioCliente(props: FormularioClientesProps) {
                   value={values.estado}
                   error={errors.estado}
                   touched={touched.estado}
+                  label_item_vazio="Selecione"
                 />
                 <Col md={12} className="d-flex justify-content-end mt-5">
                   <ButtonGroup>
