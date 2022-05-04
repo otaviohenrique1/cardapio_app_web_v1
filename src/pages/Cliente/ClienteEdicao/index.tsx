@@ -5,13 +5,13 @@ import { ContainerApp } from "../../../components/ContainerApp";
 import { FormularioCliente } from "../../../components/Formularios/FormularioCliente";
 import { ModalErroCadastro, ModalSucessoCadastro } from "../../../components/Modals";
 import { ApiBuscaDadosUmCliente, ApiEdicaoCliente } from "../../../utils/api";
-import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioCliente } from "../../../utils/constantes";
+import { FORMATO_DATA_COM_HORA_3, valoresIniciaisCliente } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { FormatadorCrypto } from "../../../utils/FormatadorCrypto";
 import { validacaoSchemaFormularioUsuario } from "../../../utils/ValidacaoSchemas";
 
 export function ClienteEdicao() {
-  const [data, setData] = useState<ClienteTypes>(valoresIniciaisFormularioCliente);
+  const [data, setData] = useState<ClienteTypes>(valoresIniciaisCliente);
   const navigation = useNavigate();
 
   let { id } = useParams();
@@ -25,9 +25,9 @@ export function ClienteEdicao() {
         let { nome, email, senha, rua, numero, bairro,
           cidade, estado, cep, telefone, confirmacao_senha } = item.data;
         let data: ClienteTypes = {
-          nome, email, senha, rua, numero, bairro,
-          cidade, estado, cep, telefone,
-          confirmacao_senha
+          nome, email, senha, rua, numero, bairro, cidade, estado,
+          cep, telefone, confirmacao_senha, data_modificacao_cadastro: "",
+          id: "", data_cadastro: "", empresaId: ""
         };
 
         setData(data);
@@ -89,7 +89,11 @@ export function ClienteEdicao() {
     estado: estado || "",
     cep: cep || "",
     telefone: telefone || "",
-    confirmacao_senha: confirmacao_senha || ""
+    confirmacao_senha: confirmacao_senha || "",
+    id: "",
+    data_cadastro: "",
+    data_modificacao_cadastro: "",
+    empresaId: ""
   };
 
   const senha_antiga = FormatadorDados.FormataExibicaoSenha(senha.slice(0, 12));
