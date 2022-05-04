@@ -7,7 +7,7 @@ import { ModalErroDadosNaoCarregados } from "../../components/Modals";
 import { ApiBuscaDadosTodasRefeicoes, id_empresa_cliente } from "../../utils/api";
 
 export function HomePage() {
-  const [data, setData] = useState<RefeicaoListaTypes[]>([]);
+  const [data, setData] = useState<RefeicaoTypes[]>([]);
 
   useEffect(() => {
     // api.get(`refeicao/cardapio/${id_empresa_cliente}`)
