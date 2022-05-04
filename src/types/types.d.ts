@@ -51,19 +51,25 @@ interface ClienteTypes {
   estado: string;
   cep: string;
   telefone: string;
-}
-
-interface ClienteDadosTypes extends ClienteTypes {
   id: string;
-  codigo: string;
   data_cadastro: string;
   data_modificacao_cadastro: string;
+  empresaId: string;
 }
 
 /* Parte da Refeicao */
 interface IngredientesTypes {
+  id: string;
   nome: string;
   quantidade: number | string;
+  unidade_quantidade: string;
+  removivel: boolean;
+}
+
+interface IngredientesOpcionaisTypes {
+  id: string;
+  nome: string;
+  preco: number;
 }
 
 interface FotoTypes {
@@ -72,60 +78,47 @@ interface FotoTypes {
   nome: string;
 }
 
-interface RefeicaoBaseTypes {
-  nome: string;
-  preco: number;
-}
-
-interface RefeicaoTypes extends RefeicaoBaseTypes {
-  nome: string;
-  preco: string | number;
-  descricao: string;
-  ingredientes: IngredientesTypes[];
-}
-
-interface RefeicaoDadosFichaTypes {
+interface RefeicaoTypes {
   id: string;
   nome: string;
   preco: string | number;
-  descricao: string;
   ingredientes: IngredientesTypes[];
+  lista_opcionais: ListaOpcionaisItemTypes[];
+  tipo_produto: string,
+  descricao: string;
   imagens_galeria: FotoTypes[];
 }
 
-// interface RefeicaoDadosTypes extends RefeicaoTypes {
-//   id: string;
-//   codigo: string;
-//   data_cadastro: string;
-//   data_modificacao_cadastro: string;
-// }
-
-interface RefeicaoListaTypes extends RefeicaoBaseTypes {
+/* Parte do Pedido */
+interface PedidoTypes {
   id: string;
-}
-
-interface Ingredientes {
-  nome: string;
-}
-
-/*
-interface Ingredientes {
-  nome: string;
-}
-
-interface RefeicaoTypes {
-  nome: string;
-  preco: string | number;
-  ingredientes: Ingredientes[];
-  descricao: string;
-  ativo: string | boolean;
-  imagens: File[];
-}
-
-interface RefeicaoDadosTypes extends RefeicaoTypes {
-  id: string;
-  codigo: string;
+  lista_refeicoes: ListaRefeicoesItemTypes[];
+  preco_total: number;
   data_cadastro: string;
   data_modificacao_cadastro: string;
+  clienteId: string;
+  status_pedido: string;
 }
-*/
+
+interface ListaRefeicoesItemTypes {
+  id: string;
+  refeicaoId: string;
+  quantidade: number;
+  pedidoId: string;
+  lista_opcionais: ListaOpcionaisItemTypes[];
+  lista_ingredientes_removidos: ListaIngredientesRemovidosItemTypes[];
+}
+
+interface ListaOpcionaisItemTypes {
+  id: string;
+  nome: string;
+  preco: number;
+  pedidoRefeicaoId: string;
+  refeicaoId: string;
+}
+
+interface ListaIngredientesRemovidosItemTypes {
+  id: string;
+  nome: string;
+  pedidoRefeicaoId: string;
+}

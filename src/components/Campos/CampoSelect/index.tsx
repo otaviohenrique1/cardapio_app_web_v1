@@ -1,61 +1,69 @@
 import { Field } from "formik";
-import { Col, Label } from "reactstrap";
-import { ColumnProps } from "reactstrap/types/lib/Col";
-import { AlertMensagemErro } from "../../AlertMensagem/AlertMensagemErro";
+import Col, { ColumnProps } from "reactstrap/types/lib/Col";
+import { CampoErro } from "../CampoErro";
+import { LabelCampoInput } from "../LabelCampoInput";
 
-interface CampoSelectItemBaseTypes {
+export interface CampoSelectItemBaseTypes {
   valor: string | number;
   texto: string | number;
 }
 
-interface CampoSelectProps {
-  md: ColumnProps;
-  label: string;
+export interface CampoSelectProps {
   id: string;
   name: string;
   value: string;
   placeholder: string;
-  error?: any;
-  touched?: any;
-  data: CampoSelectItemBaseTypes[]
+  data: CampoSelectItemBaseTypes[];
+  label_item_vazio: string;
 }
 
 export function CampoSelect(props: CampoSelectProps) {
-  const { md, label, id, name, value, placeholder, error, touched, data } = props;
+  const { id, name, value, placeholder, data, label_item_vazio } = props;
 
   return (
-    <Col md={md} className="d-flex flex-column mt-3">
-      <Label className="form-label" htmlFor={id}>{label}</Label>
-      <Field
-        className="form-select"
-        id={id}
-        name={name}
-        value={value}
-        placeholder={placeholder}
-        as="select"
-      >
-        <option value="">Selecione</option>
-        {data.map((item, index) => {
-          const { valor, texto } = item;
-          const data = { texto, valor };
-          return (
-            <CampoSelectItem data={data} key={index} />
-          );
-        })}
-      </Field>
-      {error && touched ? (<AlertMensagemErro>{error}</AlertMensagemErro>) : null}
-    </Col>
+    <Field
+      className="form-select"
+      id={id}
+      name={name}
+      value={value}
+      placeholder={placeholder}
+      as="select"
+    >
+      <option value="">{label_item_vazio}</option>
+      {data.map((item, index) => {
+        const { valor, texto } = item;
+        return (
+          <option key={index} value={valor}>{texto}</option>
+        );
+      })}
+    </Field>
   );
 }
 
-interface CampoSelectItemProps {
-  data: CampoSelectItemBaseTypes;
+export interface CampoSelectPropsComErroProps extends CampoSelectProps {
+  label: string;
+  data: CampoSelectItemBaseTypes[];
+  error?: any;
+  touched?: any;
+  md: ColumnProps;
+  xs?: ColumnProps;
+  sm?: ColumnProps;
+  lg?: ColumnProps;
+  xl?: ColumnProps;
+  xxl?: ColumnProps;
 }
 
-function CampoSelectItem(props: CampoSelectItemProps) {
-  const { valor, texto } = props.data;
+export function CampoSelectComErro(props: CampoSelectPropsComErroProps) {
+  const { id, label, data, name, value, placeholder,
+    label_item_vazio, error, touched, md, xs, sm, lg, xl, xxl } = props;
 
   return (
-    <option value={valor}>{texto}</option>
+    <Col md={md} xs={xs} sm={sm} lg={lg} xl={xl} xxl={xxl} className="d-flex flex-column mt-3">
+      <LabelCampoInput htmlFor={id} label={label} />
+      <CampoSelect id={id} name={name}
+        value={value} placeholder={placeholder}
+        data={data} label_item_vazio={label_item_vazio} />
+      <CampoErro error={error} touched={touched} />
+    </Col>
   );
 }
