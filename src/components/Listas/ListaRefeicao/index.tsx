@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Col, ListGroup, ListGroupItem } from "reactstrap";
-import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { Titulo } from "../../Titulo";
 
 interface ListaProps {
-  data: RefeicaoListaTypes[];
+  data: RefeicaoTypes[];
 }
 
 export function ListaRefeicao(props: ListaProps) {
@@ -22,7 +21,7 @@ export function ListaRefeicao(props: ListaProps) {
 }
 
 interface ListaRefeicaoItemProps {
-  data: RefeicaoListaTypes;
+  data: RefeicaoTypes;
 }
 
 function ListaRefeicaoItem(props: ListaRefeicaoItemProps) {
@@ -40,7 +39,7 @@ function ListaRefeicaoItem(props: ListaRefeicaoItemProps) {
       </ListGroupItem>
       <ListGroupItem className="d-flex flex-row justify-content-between bg-info text-black">
         <Titulo tag="h3" className="fw-bold">Preço (R$)</Titulo>
-        <Titulo tag="h3">{FormatadorDados.FormataValorMonetarioTexto(preco)}</Titulo>
+        <Titulo tag="h3">{preco}</Titulo>
       </ListGroupItem>
     </ListGroup>
   );
