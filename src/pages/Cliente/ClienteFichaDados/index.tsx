@@ -6,11 +6,11 @@ import { ContainerApp } from "../../../components/ContainerApp";
 import { ItemListaFichaDadosBaseTypes, ListaFichaDados } from "../../../components/Listas/ListaFichaDados";
 import { ModalErroCadastro } from "../../../components/Modals";
 import { ApiBuscaDadosUmCliente } from "../../../utils/api";
-import { FORMATO_DATA_COM_HORA_4, valoresIniciaisFichaDadosCliente } from "../../../utils/constantes";
+import { FORMATO_DATA_COM_HORA_4, valoresIniciaisCliente } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 
 export function ClienteFichaDados() {
-  const [data, setData] = useState<ClienteDadosTypes>(valoresIniciaisFichaDadosCliente);
+  const [data, setData] = useState<ClienteTypes>(valoresIniciaisCliente);
   const { id } = useParams();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export function ClienteFichaDados() {
     // api.get(`cliente/${id}`)
     ApiBuscaDadosUmCliente(id)
       .then((item) => {
-        const { nome, email, senha, codigo, rua, numero, bairro, cidade, estado, cep, telefone,
+        const { nome, email, senha, rua, numero, bairro, cidade, estado, cep, telefone,
           data_cadastro, data_modificacao_cadastro } = item.data;
 
         const senha_formatada = FormatadorDados
@@ -31,10 +31,10 @@ export function ClienteFichaDados() {
         const data_modificacao_cadastro_formatada = FormatadorDados
           .FormatadorDataHora(data_modificacao_cadastro, FORMATO_DATA_COM_HORA_4);
 
-        const data: ClienteDadosTypes = {
-          id, nome, email, senha: senha_formatada, codigo, rua, numero, bairro, cidade, estado, cep, telefone,
+        const data: ClienteTypes = {
+          id, nome, email, senha: senha_formatada, rua, numero, bairro, cidade, estado, cep, telefone,
           data_cadastro: data_cadastro_formatada, data_modificacao_cadastro: data_modificacao_cadastro_formatada,
-          confirmacao_senha: ""
+          confirmacao_senha: "", empresaId: ""
         };
 
         setData(data);
@@ -45,15 +45,13 @@ export function ClienteFichaDados() {
       });
   }, [id]);
 
-  const { id: id_cliente, nome, email, senha, codigo, rua, numero, bairro, cidade, estado, cep, telefone,
+  const { nome, email, senha, rua, numero, bairro, cidade, estado, cep, telefone,
     data_cadastro, data_modificacao_cadastro } = data;
 
   const data_ficha: ItemListaFichaDadosBaseTypes[] = [
-    { titulo: "Id", valor: id_cliente },
     { titulo: "Nome", valor: nome },
     { titulo: "E-mail", valor: email },
     { titulo: "Senha", valor: senha },
-    { titulo: "Código", valor: codigo },
     { titulo: "Rua", valor: rua },
     { titulo: "Numero", valor: numero },
     { titulo: "Bairro", valor: bairro },
